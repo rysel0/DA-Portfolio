@@ -1,4 +1,7 @@
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 USE_ROUNDED_COORDS = False
 OPENWEATHER_API = os.getenv("OPENWEATHER_API_KEY")

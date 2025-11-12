@@ -28,16 +28,18 @@ venv\Scripts\activate     # Windows
 pip install -r requirements.txt
 ```
 
-3. Задайте API-ключи через переменные окружения:
+3. Создайте файл .env в корне проекта:
 
-P.S. Предварительно необходимо зарегистрироваться и получить API ключи на сайтах https://openweathermap.org/ и https://www.geoapify.com/
+Предварительно зарегистрируйтесь и получите API-ключи на сайтах https://openweathermap.org/ и https://www.geoapify.com/
 
-```bash
-export OPENWEATHER_API_KEY="твой_ключ"    # Linux/macOS
-export GEOAPIFY_API_KEY="твой_ключ"       # Linux/macOS
+Затем создайте файл .env со следующим содержимым:
+
+```env
+OPENWEATHER_API_KEY="твой_ключ"
+GEOAPIFY_API_KEY="твой_ключ"
 ```
 
-> 🔒 Ключи не хранятся в коде.
+> ⚠️ Не забудьте добавить `.env` в `.gitignore`, чтобы ключи не попали в репозиторий
 
 ---
 
@@ -63,17 +65,21 @@ python -m src
 ## 📦 Структура проекта
 
 ```
-src/
-├── __main__.py
-├── config.py
-├── coordinates.py
-├── exceptions.py
-├── weather_api_service.py
-└── weather_formatter.py
-venv/
-requirements.txt
+.
+├── .env
+├── README.md
+├── requirements.txt
+├── src/
+│   ├── __main__.py
+│   ├── config.py
+│   ├── coordinates.py
+│   ├── exceptions.py
+│   ├── weather_api_service.py
+│   └── weather_formatter.py
+└── venv/
 ```
 
 ## 🛠 Используемые библиотеки
 
 * requests
+* python-dotenv
