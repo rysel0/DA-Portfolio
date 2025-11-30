@@ -33,6 +33,13 @@ class Weather(NamedTuple):
     city: str
 
 
+class Forecast(NamedTuple):
+    """Key components of forecast"""
+    temperature: Celsius
+    weather_type: WeatherType
+    date: datetime
+
+
 def get_weather(coordinates: Coordinates) -> Weather:
     """Requests weather in OpenWeather API and returns it"""
     openweather_response = _get_openweather_response(
@@ -94,6 +101,38 @@ def _parse_sun_time(weather_dict: dict, suntype: str) -> datetime:
 
 def _parse_city(weather_dict: dict) -> str:
     return weather_dict['name']
+
+
+def get_forecast(coordinates: Coordinates) -> list[Forecast]:
+    """Requests weather forecast in OpenWeather API and returns it"""
+    openweather_response = _get_openweather_forecast_response(
+        lattitude=coordinates.latitude, longitude=coordinates.longitude)
+    forecast = _parse_openweather_forecast_response(openweather_response)
+    return forecast
+
+
+def _get_openweather_forecast_response(lattitude: float, longitude: float):
+    url = config.OPENWEATHER_FORECAST_URL.format(lat=lattitude, lon=longitude)
+    try:
+        return requests.get(url=url, timeout=5).content
+    except Exception as exc:
+        raise ApiServiceError from exc
+
+
+def _parse_openweather_forecast_response(forecast_response: bytes) -> list[Forecast]:
+    try:
+        openweather_dict = json.loads(forecast_response)
+    except JSONDecodeError as exc:
+        raise ApiServiceError from exc
+    
+    forecast_list = []
+    for item in openweather_dict.get('list', []):
+        forecast_list.append(Forecast(
+            temperature=_parse_temperature(item),
+            weather_type=_parse_weather_type(item),
+            date=datetime.fromtimestamp(item['dt'])
+        ))
+    return forecast_list
 
 
 if __name__ == "__main__":

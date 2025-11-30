@@ -1,6 +1,6 @@
 """Format ouput for weather"""
 from datetime import datetime
-from weather_api_service import Weather
+from weather_api_service import Weather, Forecast
 
 
 def format_weather(weather: Weather) -> str:
@@ -11,6 +11,17 @@ def format_weather(weather: Weather) -> str:
             f"Описание погоды: {weather.weather_type.value}\n"
             f"Восход: {weather.sunrise.strftime('%H:%M')}\n"
             f"Закат: {weather.sunset.strftime('%H:%M')}\n")
+
+
+def format_forecast(forecast_list: list[Forecast]) -> str:
+    """Formats forecast data in string"""
+    result = "Прогноз погоды на 5 дней:\n" + "=" * 50 + "\n"
+    for forecast in forecast_list:
+        result += (f"Дата и время: {forecast.date.strftime('%Y-%m-%d %H:%M')}\n"
+                   f"Температура: {forecast.temperature}°C\n"
+                   f"Описание погоды: {forecast.weather_type.value}\n"
+                   + "-" * 50 + "\n")
+    return result
 
 
 if __name__ == "__main__":
