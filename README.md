@@ -30,16 +30,14 @@
 
 ---
 
-### 3. Weather CLI → API
+### 3. [Weather CLI → API](https://gitlab.com/khayrulin04/weather-cli-api)
 - Развитие проекта **Weather CLI**
 - Добавлен HTTP API на **FastAPI**
 - Эндпоинты:
   - текущая погода
   - прогноз на 5 дней
-- Документация API: Swagger / ReDoc  
-🔗 Основной репозиторий:  
-https://gitlab.com/khayrulin04/weather-cli-api
-  
+- Документация API: Swagger / ReDoc
+
 ---
 
 ### 4. [Custom k-Nearest Neighbors (KNN)](./knn)
